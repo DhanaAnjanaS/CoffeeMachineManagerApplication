@@ -92,13 +92,13 @@ public class CoffeeMachineManager
 
     public void SimulateError()
     {
-        if(_coffeeMachine.MachineStatus != MachineStatus.PreHeat || _coffeeMachine.MachineStatus != MachineStatus.PreInclusion)
+        if(_coffeeMachine.MachineStatus == MachineStatus.Brewing)
         {
             _coffeeMachine.ChangeMachineStatus(MachineStatus.Error);
         }
         else
         {
-            _coffeeMachineView.DisplayTopConsole($"Error cannot be simulated when machine is in {MachineStatus.PreHeat} or {MachineStatus.PreInclusion} state");
+            _coffeeMachineView.DisplayTopConsole($"Error can be simulated ONLY when machine is in {MachineStatus.Brewing} state");
         }
     }
 
