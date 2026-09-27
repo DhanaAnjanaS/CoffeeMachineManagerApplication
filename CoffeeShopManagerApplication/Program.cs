@@ -13,6 +13,8 @@ public class Program
         Logger logger = new Logger("CoffeeMachineLog.csv");
         CoffeeMachineView coffeeMachineView = new CoffeeMachineView();
         CoffeeMachineManager coffeeMachineManager = new CoffeeMachineManager(coffeeMachineView, coffeeMachine, logger);
+        coffeeMachine.MachineStatusChanged += (sender, message) => { coffeeMachineManager.HandleStatusChanged(message); };
+        coffeeMachine.MachineLidStatusChanged += (sender, message) => { coffeeMachineManager.HandleStatusChanged(message); };
         coffeeMachineManager.ShowDashboard();
     }
 }

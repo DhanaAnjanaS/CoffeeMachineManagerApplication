@@ -23,7 +23,7 @@ public class CoffeeMachine
         if (LidStatus != lidStatus)
         {
             LidStatus = lidStatus;
-            MachineStatusChanged?.Invoke(this, $"Coffee machine status changed to state {lidStatus}");
+            MachineStatusChanged?.Invoke(this, $"Coffee machine lid changed to state {lidStatus}");
         }
     }
 
@@ -38,6 +38,7 @@ public class CoffeeMachine
 
     public async void StartSequence()
     {
+        IsRunning = true;
         await RunSequence();
     }
 
@@ -46,7 +47,7 @@ public class CoffeeMachine
         IsRunning = false;
     }
 
-    public async Task RunSequence()
+    private async Task RunSequence()
     {
         while(this.MachineStatus != MachineStatus.Error && IsRunning)
         {

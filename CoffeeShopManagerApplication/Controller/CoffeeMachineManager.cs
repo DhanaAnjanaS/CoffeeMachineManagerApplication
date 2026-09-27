@@ -74,24 +74,32 @@ public class CoffeeMachineManager
         else if (_coffeeMachine.LidStatus == LidStatus.Closed)
         {
             _coffeeMachine.ChangeMachineStatus(MachineStatus.Ready);
-            _logger.Log("STATUS", $"Machine status changed to {MachineStatus.Ready}");
             _coffeeMachineView.DisplayTopConsole("Coffee machine is ready for brewing");
         }
     }
 
     public void StartBrewSequence()
     {
-
+        _coffeeMachine.StartSequence();
     }
 
     public void StopBrewSequence()
     {
-
+        _coffeeMachine.StopSequence();
+        _coffeeMachine.ChangeMachineStatus(MachineStatus.Ready);
+        _coffeeMachineView.DisplayTopConsole("Coffee machine brewing stopped");
     }
 
     public void SimulateError()
     {
-
+        if(_coffeeMachine.MachineStatus != MachineStatus.PreHeat || _coffeeMachine.MachineStatus != MachineStatus.PreInclusion)
+        {
+            _coffeeMachine.ChangeMachineStatus(MachineStatus.Error);
+        }
+        else
+        {
+            _coffeeMachineView.DisplayTopConsole($"Error cannot be simulated when machine is in {MachineStatus.PreHeat} or {MachineStatus.PreInclusion} state");
+        }
     }
 
     public void ToggleLidSensor()
@@ -112,13 +120,17 @@ public class CoffeeMachineManager
         if(_coffeeMachine.LidStatus == LidStatus.Closed && _coffeeMachine.MachineStatus == MachineStatus.Ready)
         {
             _coffeeMachine.ChangeLidStatus(LidStatus.Open);
-            _logger.Log("LID", $"Lid status changed to {LidStatus.Open}");
-            _coffeeMachineView.DisplayTopConsole($"Coffee machine lid status changed to {LidStatus.Open}");
         }
+    }
+
+    public void HandleStatusChanged(string message)
+    {
+        _logger.Log("OPERATION", message);
+        _coffeeMachineView.DisplayTopConsole(message);
     }
 
     public void ViewEventLogs()
     {
-
+        _coffeeMachineView.DisplayLogs(this._logger.GetAllLogs());
     }
 }
