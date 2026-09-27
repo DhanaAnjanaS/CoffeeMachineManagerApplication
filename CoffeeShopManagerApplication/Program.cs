@@ -1,4 +1,5 @@
 ﻿using CoffeeShopManagerApplication.Controller;
+using CoffeeShopManagerApplication.Repository;
 using CoffeeShopManagerApplication.Model;
 using CoffeeShopManagerApplication.View;
 
@@ -9,8 +10,9 @@ public class Program
     public static void Main()
     {
         CoffeeMachine coffeeMachine = new CoffeeMachine();
+        Logger logger = new Logger("CoffeeMachineLog.csv");
         CoffeeMachineView coffeeMachineView = new CoffeeMachineView();
-        CoffeeMachineManager coffeeMachineManager = new CoffeeMachineManager(coffeeMachineView, coffeeMachine);
+        CoffeeMachineManager coffeeMachineManager = new CoffeeMachineManager(coffeeMachineView, coffeeMachine, logger);
         coffeeMachineManager.ShowDashboard();
     }
 }
