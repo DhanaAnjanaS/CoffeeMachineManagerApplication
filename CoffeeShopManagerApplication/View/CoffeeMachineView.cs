@@ -6,14 +6,17 @@ public class CoffeeMachineView
 {
     public void DisplayTopConsole(string notification)
     {
+        Console.WriteLine();
         Console.WriteLine("Coffee Machine Status");
         Console.WriteLine($"Notification :{notification}");
+        Splitter();
     }
 
     public void DisplayActivity(MachineStatus machineStatus, LidStatus lidStatus)
     {
         Console.WriteLine($"Machine Status: {machineStatus}");
         Console.WriteLine($"Lid Status: {lidStatus}");
+        Splitter();
     }
 
     public void DisplayLogs(IEnumerable<string> logs)
@@ -36,6 +39,7 @@ public class CoffeeMachineView
 
     public void WaitForConfirmation()
     {
+        Console.WriteLine();
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
     }
