@@ -4,8 +4,7 @@ namespace CoffeeShopManagerApplication.Repository;
 
 public class Logger
 {
-    private string _filePath;
-
+    private readonly string _filePath;
     private readonly object _lock = new();
 
     public Logger(string filePath)
@@ -17,11 +16,10 @@ public class Logger
         }
     }
 
-
     public void Log(string eventType, string description)
     {
-        byte[] bytes = Encoding.UTF8.GetBytes
-            ($"{DateTime.UtcNow},[{eventType}],{description}{Environment.NewLine}");
+        byte[] bytes = Encoding.UTF8.GetBytes($"{DateTime.UtcNow},[{eventType}],{description}{Environment.NewLine}");
+
         lock (_lock)
         {
             using FileStream fileStream = new(_filePath, FileMode.Append, FileAccess.Write);
@@ -33,7 +31,7 @@ public class Logger
     {
         lock (_lock)
         {
-            return File.ReadLines(_filePath).Select(line => line.Replace(",", " "));
+            return File.ReadAllLines(_filePath).Select(line => line.Replace(",", " ")).ToList();
         }
     }
 }
