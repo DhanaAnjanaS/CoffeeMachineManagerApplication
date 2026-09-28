@@ -16,18 +16,13 @@ public class CoffeeMachineView
 
     private bool _exitRequested;
 
-    public CoffeeMachineView(
-        CoffeeMachine coffeeMachine,
-        CoffeeMachineManager manager)
+    public CoffeeMachineView(CoffeeMachine coffeeMachine, CoffeeMachineManager manager)
     {
         _coffeeMachine = coffeeMachine;
         _manager = manager;
 
-        _coffeeMachine.MachineStatusChanged +=
-            HandleMachineStatusChanged;
-
-        _coffeeMachine.MachineLidStatusChanged +=
-            HandleLidStatusChanged;
+        _coffeeMachine.MachineStatusChanged += HandleMachineStatusChanged;
+        _coffeeMachine.MachineLidStatusChanged += HandleLidStatusChanged;
     }
 
     public void HandleNotification(string notification)
@@ -38,9 +33,7 @@ public class CoffeeMachineView
         }
     }
 
-    private void HandleMachineStatusChanged(
-        object sender,
-        string message)
+    private void HandleMachineStatusChanged(object sender, string message)
     {
         lock (_consoleLock)
         {
@@ -48,9 +41,7 @@ public class CoffeeMachineView
         }
     }
 
-    private void HandleLidStatusChanged(
-        object sender,
-        string message)
+    private void HandleLidStatusChanged(object sender, string message)
     {
         // The next UI refresh automatically reads the
         // latest lid state from the machine.
@@ -178,16 +169,10 @@ public class CoffeeMachineView
         return "No activity";
     }
 
-    private string GetRemainingTime(
-        int durationSeconds,
-        string activity)
+    private string GetRemainingTime(int durationSeconds, string activity)
     {
-        int elapsed =
-            (int)(DateTime.Now - _statusChangedAt).TotalSeconds;
-
-        int remaining =
-            Math.Max(0, durationSeconds - elapsed);
-
+        int elapsed = (int)(DateTime.Now - _statusChangedAt).TotalSeconds;
+        int remaining = Math.Max(0, durationSeconds - elapsed);
         return $"{activity} - {remaining} seconds remaining";
     }
 
